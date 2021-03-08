@@ -21,24 +21,28 @@ let initialScoreDispaly = () => {
 }
 initialScoreDispaly()
 
-$(".game-light").on("click", (e) => { // adds an event listener to all the game lights/squares
-    if (gameInProgress) {
-        lightClicked(e.target);
-        userEnteredSequence.push(e.target.id)
-        checkMatches()
-    }
-})
+squares.forEach( square => {
+    square.addEventListener("click", () => {
+        if (gameInProgress) {
+            lightClicked(square);
+            userEnteredSequence.push(square.id)
+            checkMatches()
+        }
+    });
+});
 
 let checkMatches = () => {
     for (let i = 0; i < userEnteredSequence.length; i++) {
         if (userEnteredSequence[i] != playedSequence[i]) {
             gameEnd()
-        } else if (i + 1 === playedSequence.length) {
-            levelIncrease++
-            currentLevel = startingLevel + levelIncrease
-            updateLevelDisplay()
-            setTimeout(activateNext, 1000)
         }
+    }
+
+    if (userEnteredSequence.length === playedSequence.length) {
+        levelIncrease++
+        currentLevel = startingLevel + levelIncrease
+        updateLevelDisplay()
+        setTimeout(activateNext, 1000)
     }
 }
 
