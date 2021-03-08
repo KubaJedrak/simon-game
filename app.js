@@ -21,15 +21,13 @@ let initialScoreDispaly = () => {
 }
 initialScoreDispaly()
 
-squares.forEach( square => {
-    square.addEventListener("click", () => {
-        if (gameInProgress) {
-            lightClicked(square);
-            userEnteredSequence.push(square.id)
-            checkMatches()
-        }
-    });
-});
+$(".game-light").on("click", (e) => { // adds an event listener to all the game lights/squares
+    if (gameInProgress) {
+        lightClicked(e.target);
+        userEnteredSequence.push(e.target.id)
+        checkMatches()
+    }
+})
 
 let checkMatches = () => {
     for (let i = 0; i < userEnteredSequence.length; i++) {
